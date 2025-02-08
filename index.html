@@ -14,7 +14,7 @@
       --book-title: "1984";
       --book-author: "by George Orwell";
       --book-cover-url: url('OIP.jpg');
-      /* Accent color still used for borders */
+      /* Accent color still used for borders elsewhere if needed */
       --accent-color: #d00;
     }
   </style>
@@ -22,7 +22,6 @@
   <style>
     /* Base CSS Variables */
     :root {
-      /* These variables are no longer used for backgrounds */
       --text-color: #000000;
       --header-font: Impact, Haettenschweiler, 'Arial Black', sans-serif;
       --body-font: Arial, sans-serif;
@@ -49,11 +48,8 @@
 
     /* Container for all page content */
     .container {
-      /* No extra background or color styles */
+      /* No extra border or background */
     }
-
-    /* Remove dark-mode toggle and extra background colors.
-       The deep cuts trigger (big red triangle) is removed. */
 
     /* Header styling with centered title */
     header {
@@ -72,15 +68,13 @@
       content: var(--header-title);
     }
 
-    /* Book article styling */
+    /* Book article styling (removed border) */
     .book {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      /* Retain border on the book container */
-      border: 2px solid var(--accent-color);
     }
-    /* Book cover as a configurable div */
+    /* Book cover as a configurable div (removed border) */
     .book-cover {
       display: block;
       width: 100%;
@@ -88,9 +82,8 @@
       height: 0;
       padding-bottom: 50%; /* Adjusted aspect ratio for a shorter image */
       margin: 0 auto 20px auto;
-      border: 2px solid var(--accent-color);
       background-image: var(--book-cover-url);
-      background-size: contain; /* Changed to contain to make entire image visible */
+      background-size: contain; /* Ensures whole image fits */
       background-repeat: no-repeat;
       background-position: center center;
     }
@@ -108,7 +101,6 @@
       font-size: 1.2em;
       margin-bottom: 20px;
       text-align: center;
-      /* Use accent color for borders and highlights */
       color: var(--accent-color);
     }
     /* Configurable book author text */
@@ -116,13 +108,12 @@
       content: var(--book-author);
     }
 
-    /* Expandable Text Areas using <details> with borders only */
+    /* Expandable Text Areas using <details> */
     .book-details details {
       margin-bottom: 15px;
       padding: 10px;
-      border: 1px solid var(--accent-color);
-      /* Remove background color so only the border is visible */
-      background: transparent;
+      /* Remove any default border if present */
+      border: none;
     }
     .book-details details summary {
       font-weight: bold;
@@ -137,6 +128,16 @@
     }
     .book-details details ul {
       list-style: disc inside;
+    }
+    /* Background colors for each details container */
+    .book-details details:nth-of-type(1) {
+      background: #ffdddd; /* Red alert background */
+    }
+    .book-details details:nth-of-type(2) {
+      background: #ffffcc; /* Yellow caution-tape-inspired background */
+    }
+    .book-details details:nth-of-type(3) {
+      background: #ddeeff; /* Green/blue go background */
     }
   </style>
 </head>
@@ -155,17 +156,17 @@
         <!-- Book Cover -->
         <div class="book-cover"></div>
         
-        <!-- Expandable Book Details -->
+        <!-- Expandable Book Details (default collapsed) -->
         <section class="book-details">
-          <details open>
+          <details>
             <summary><strong>Why It Was Banned:</strong></summary>
             <p>A scathing critique of totalitarian regimes and the dangers of unchecked authority.</p>
           </details>
-          <details open>
+          <details>
             <summary><strong>Why You Should Read It:</strong></summary>
             <p>This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.</p>
           </details>
-          <details open>
+          <details>
             <summary><strong>Where to Read It for Free:</strong></summary>
             <ul>
               <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
