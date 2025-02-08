@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Banned Book Club</title>
   
+  <!-- Import custom font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  
   <!-- Configurable variables -->
   <style id="config">
     :root {
@@ -16,9 +19,9 @@
       --book-cover-url: url('OIP.jpg');
       
       /* Details text content */
-      --details-banned-title: "Why It Was Banned:";
-      --details-read-title: "Why You Should Read It:";
-      --details-free-title: "Where to Read It for Free:";
+      --details-banned-title: "🔥 Why It Was Banned:"; 
+      --details-read-title: "📚 Why You Should Read It:"; 
+      --details-free-title: "🚀 Where to Read It for Free:";
 
       --details-banned-content: "A scathing critique of totalitarian regimes and the dangers of unchecked authority.";
       --details-read-content: "This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.";
@@ -43,8 +46,8 @@
     /* Base CSS Variables */
     :root {
       --text-color: #000000;
-      --header-font: Impact, Haettenschweiler, 'Arial Black', sans-serif;
-      --body-font: Arial, sans-serif;
+      --header-font: 'Lato', Impact, Haettenschweiler, 'Arial Black', sans-serif;
+      --body-font: 'Lato', Arial, sans-serif;
     }
     
     /* Reset */
@@ -54,7 +57,13 @@
       padding: 0;
     }
 
-    /* Background image and basic body styling */
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Global styles */
     body {
       background: var(--background-image-url) no-repeat center center fixed;
       background-size: cover;
@@ -62,74 +71,77 @@
       font-family: var(--body-font);
       line-height: 1.6;
       padding: 20px;
-      position: relative;
       min-height: 100vh;
+      animation: fadeIn 1s ease-out;
     }
-
-    /* Container for all page content */
+    
     .container {
-      /* No extra border or background */
+      /* No extra styling */
     }
-
-    /* Header styling with centered title */
+    
+    /* Header styling */
     header {
       text-align: center;
       margin-bottom: 40px;
+      animation: fadeIn 1.2s ease-out;
     }
     header h1 {
       font-family: var(--header-font);
       font-size: 3em;
       letter-spacing: 2px;
-      text-shadow: none;
       margin-bottom: 10px;
     }
-    /* Configurable header text via pseudo-element */
     header h1::before {
       content: var(--header-title);
     }
-
-    /* Book article styling (removed borders) */
+    
+    /* Book article styling */
     .book {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      animation: fadeIn 1.4s ease-out;
     }
-    /* Book cover as a configurable div (removed border) */
+    
     .book-cover {
       display: block;
       width: 100%;
       max-width: 1000px;
       height: 0;
-      padding-bottom: 50%; /* Adjusted aspect ratio for a shorter image */
+      padding-bottom: 50%;
       margin: 0 auto 20px auto;
       background-image: var(--book-cover-url);
-      background-size: contain; /* Ensures whole image fits */
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center center;
+      transition: transform 0.3s ease;
     }
+    /* Scale up slightly on hover */
+    .book-cover:hover {
+      transform: scale(1.03);
+    }
+    
     .book-title {
       font-family: var(--header-font);
       font-size: 2.5em;
       margin-bottom: 10px;
       text-align: center;
     }
-    /* Configurable book title text */
     .book-title::before {
       content: var(--book-title);
     }
+    
     .book-author {
       font-size: 1.2em;
       margin-bottom: 20px;
       text-align: center;
-      color: var(--banned-accent); /* Using banned accent as common color elsewhere if needed */
+      color: var(--banned-accent);
     }
-    /* Configurable book author text */
     .book-author::before {
       content: var(--book-author);
     }
-
+    
     /* Expandable Text Areas using <details> */
-    /* Remove inner padding so that borders line up; padding is moved to summary */
     .book-details details {
       margin-bottom: 15px;
       padding: 0;
@@ -144,7 +156,13 @@
       outline: none;
       border: 1px solid;
       border-radius: 4px;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
+    /* Expand summary area to full width */
+    .book-details details summary:hover {
+      transform: translateX(2px);
+    }
+    
     .book-details details p,
     .book-details details ul {
       margin-top: 10px;
@@ -153,6 +171,7 @@
     .book-details details ul {
       list-style: disc inside;
     }
+    
     /* Details area #1 – Banned */
     .book-details details:nth-of-type(1) {
       background: linear-gradient(to right, var(--banned-gradient-start), var(--banned-gradient-end));
@@ -160,6 +179,7 @@
     .book-details details:nth-of-type(1) summary {
       border-color: var(--banned-accent);
     }
+    
     /* Details area #2 – Read */
     .book-details details:nth-of-type(2) {
       background: linear-gradient(to right, var(--read-gradient-start), var(--read-gradient-end));
@@ -167,12 +187,42 @@
     .book-details details:nth-of-type(2) summary {
       border-color: var(--read-accent);
     }
+    
     /* Details area #3 – Free */
     .book-details details:nth-of-type(3) {
       background: linear-gradient(to right, var(--free-gradient-start), var(--free-gradient-end));
     }
     .book-details details:nth-of-type(3) summary {
       border-color: var(--free-accent);
+    }
+    
+    /* Insert details titles and content from variables */
+    .book-details details:nth-of-type(1) summary strong::before {
+      content: var(--details-banned-title);
+    }
+    .book-details details:nth-of-type(1) p::before {
+      content: var(--details-banned-content);
+    }
+    .book-details details:nth-of-type(2) summary strong::before {
+      content: var(--details-read-title);
+    }
+    .book-details details:nth-of-type(2) p::before {
+      content: var(--details-read-content);
+    }
+    .book-details details:nth-of-type(3) summary strong::before {
+      content: var(--details-free-title);
+    }
+    .book-details details:nth-of-type(3) p::before {
+      content: var(--details-free-content);
+    }
+    
+    /* Responsive layout adjustments */
+    @media (max-width: 600px) {
+      header h1 { font-size: 2.5em; }
+      .book { padding: 10px; }
+      .book-title { font-size: 2em; }
+      .book-cover { padding-bottom: 60%; }
+      .book-details details summary { padding: 8px; }
     }
   </style>
 </head>
@@ -218,28 +268,5 @@
       </article>
     </main>
   </div>
-  
-  <!-- Inline CSS to insert details content from variables -->
-  <style>
-    /* Insert details titles and content using pseudo-elements */
-    .book-details details:nth-of-type(1) summary strong::before {
-      content: var(--details-banned-title);
-    }
-    .book-details details:nth-of-type(1) p::before {
-      content: var(--details-banned-content);
-    }
-    .book-details details:nth-of-type(2) summary strong::before {
-      content: var(--details-read-title);
-    }
-    .book-details details:nth-of-type(2) p::before {
-      content: var(--details-read-content);
-    }
-    .book-details details:nth-of-type(3) summary strong::before {
-      content: var(--details-free-title);
-    }
-    .book-details details:nth-of-type(3) p::before {
-      content: var(--details-free-content);
-    }
-  </style>
 </body>
 </html>
