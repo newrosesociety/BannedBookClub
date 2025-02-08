@@ -4,8 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Banned Book Club</title>
+  
+  <!-- Configurable variables -->
+  <style id="config">
+    :root {
+      /* Change these values to update the site without editing markup */
+      --background-image-url: url('download.jpg');
+      --header-title: "The Banned Book Club";
+      --book-title: "1984";
+      --book-author: "by George Orwell";
+      --book-cover-url: url('OIP.jpg');
+    }
+  </style>
+  
   <style>
-    /* Color variables for light & dark mode */
+    /* Base CSS Variables */
     :root {
       --bg-color: #ffffff;
       --text-color: #000000;
@@ -13,45 +26,80 @@
       --header-font: Impact, Haettenschweiler, 'Arial Black', sans-serif;
       --body-font: Arial, sans-serif;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: #000000;
-        --text-color: #ffffff;
-        --accent-color: #ff5555;
-      }
+    /* When the theme toggle is checked, override variables */
+    #theme-toggle:checked ~ .container {
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --accent-color: #ff5555;
     }
-    
-    /* Basic Reset */
+
+    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
-    /* Body Styling with a subtle DIY texture */
+
+    /* Background image and basic body styling */
     body {
       background-color: var(--bg-color);
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
+      background-image: var(--background-image-url),
+                        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
+      background-size: cover, auto;
+      background-blend-mode: overlay;
       color: var(--text-color);
       font-family: var(--body-font);
       line-height: 1.6;
       padding: 20px;
+      position: relative;
+      min-height: 100vh;
     }
-    
-    /* Header */
+
+    /* Container for all page content (so theme toggle can override variables) */
+    .container {
+      /* No extra styling needed – variables flow from here */
+    }
+
+    /* Light/Dark Mode Toggle (Pure HTML/CSS toggle using checkbox hack) */
+    #theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .toggle-label {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      padding: 5px 10px;
+      border-radius: 3px;
+      font-size: 0.9em;
+      z-index: 1001;
+      user-select: none;
+    }
+
+    /* Header styling with centered title */
     header {
       text-align: center;
       margin-bottom: 40px;
     }
-    h1 {
+    header h1 {
       font-family: var(--header-font);
       font-size: 3em;
       letter-spacing: 2px;
       text-shadow: 2px 2px var(--accent-color);
       margin-bottom: 10px;
     }
-    
-    /* Main book content */
+    /* Use pseudo-element so the header text is configurable */
+    header h1::before {
+      content: var(--header-title);
+    }
+
+    /* Book article styling */
     .book {
       max-width: 800px;
       margin: 0 auto;
@@ -59,31 +107,66 @@
       border: 2px solid var(--accent-color);
       background-color: var(--bg-color);
     }
+    /* Replace the img with a div to allow CSS configuration */
+    .book-cover {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      height: 0;
+      padding-bottom: 150%; /* Adjust aspect ratio as needed */
+      margin: 0 auto 20px auto;
+      border: 2px solid var(--accent-color);
+      background-image: var(--book-cover-url);
+      background-size: cover;
+      background-position: center center;
+    }
     .book-title {
       font-family: var(--header-font);
       font-size: 2.5em;
       margin-bottom: 10px;
+      text-align: center;
+    }
+    /* Configurable book title text */
+    .book-title::before {
+      content: var(--book-title);
     }
     .book-author {
       font-size: 1.2em;
       margin-bottom: 20px;
+      text-align: center;
       color: var(--accent-color);
     }
-    .book-details div {
+    /* Configurable book author text */
+    .book-author::before {
+      content: var(--book-author);
+    }
+
+    /* Expandable Text Areas using <details> */
+    .book-details details {
       margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid var(--accent-color);
+      background: rgba(255,255,255,0.8);
     }
-    .book-details strong {
-      color: var(--accent-color);
+    /* Ensure details text remains legible in dark mode */
+    #theme-toggle:checked ~ .container .book-details details {
+      background: rgba(0,0,0,0.8);
     }
-    a {
-      color: var(--accent-color);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--accent-color);
+    .book-details details summary {
+      font-weight: bold;
+      cursor: pointer;
+      list-style: none;
+      outline: none;
     }
-    a:hover {
-      opacity: 0.8;
+    .book-details details p,
+    .book-details details ul {
+      margin-top: 10px;
+      padding-left: 15px;
     }
-    
+    .book-details details ul {
+      list-style: disc inside;
+    }
+
     /* QR Code Placeholder */
     .qr-code {
       margin-top: 30px;
@@ -98,8 +181,8 @@
       font-size: 0.9em;
       color: var(--text-color);
     }
-    
-    /* Hidden Deep Cuts Section */
+
+    /* Deep Cuts Section (hidden by default, revealed via anchor link) */
     .deepcuts {
       display: none;
       position: fixed;
@@ -121,7 +204,6 @@
       font-size: 2em;
       margin-bottom: 20px;
     }
-    /* Close button for Deep Cuts */
     .close-deepcuts {
       position: absolute;
       top: 20px;
@@ -130,8 +212,8 @@
       color: var(--accent-color);
       text-decoration: none;
     }
-    
-    /* Tiny glitched-out Deep Cuts trigger */
+
+    /* Deep Cuts trigger – a tiny glitched-out element */
     .deepcuts-link {
       position: fixed;
       bottom: 10px;
@@ -148,63 +230,87 @@
       opacity: 1;
       transform: translate(1px, -1px);
     }
-    
+
     /* Responsive adjustments */
     @media (max-width: 600px) {
       body {
         padding: 10px;
       }
-      h1 {
+      header h1 {
         font-size: 2.5em;
       }
       .book-title {
         font-size: 2em;
+      }
+      .book-cover {
+        max-width: 250px;
       }
       .qr-placeholder {
         width: 100px;
         height: 100px;
         line-height: 100px;
       }
+      .toggle-label {
+        font-size: 0.8em;
+        padding: 4px 8px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <h1>The Banned Book Club</h1>
-  </header>
-  
-  <!-- Main Content -->
-  <main>
-    <article class="book">
-      <h2 class="book-title">1984</h2>
-      <p class="book-author">by George Orwell</p>
-      <section class="book-details">
-        <div class="banned">
-          <strong>Why It Was Banned:</strong> A scathing critique of totalitarian regimes and the dangers of unchecked authority.
-        </div>
-        <div class="read-it">
-          <strong>Why You Should Read It:</strong> This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.
-        </div>
-        <div class="free-copies">
-          <strong>Where to Read It for Free:</strong> <a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a>
-        </div>
-      </section>
-      <div class="qr-code">
-        <div class="qr-placeholder">QR Code</div>
-      </div>
-    </article>
-    <!-- Deep Cuts Trigger (a tiny glitched-out logo) -->
-    <a href="#deepcuts" class="deepcuts-link">∆</a>
-  </main>
-  
-  <!-- Hidden Deep Cuts Section -->
-  <section id="deepcuts" class="deepcuts">
-    <a href="#" class="close-deepcuts">×</a>
-    <h3>Deep Cuts</h3>
-    <p>
-      Here you'll find hidden essays, raw sketches, and behind-the-scenes musings that delve deeper into the spirit of rebellion and the art of subversion.
-    </p>
-  </section>
+  <!-- Light/Dark Mode Toggle (Checkbox Hack) -->
+  <input type="checkbox" id="theme-toggle">
+  <label for="theme-toggle" class="toggle-label">Toggle Mode</label>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1><!-- Content inserted via CSS --></h1>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+      <article class="book">
+        <h2 class="book-title"><!-- Content inserted via CSS --></h2>
+        <p class="book-author"><!-- Content inserted via CSS --></p>
+        <!-- Book Cover (now a configurable div) -->
+        <div class="book-cover"></div>
+        
+        <!-- Expandable Book Details -->
+        <section class="book-details">
+          <details open>
+            <summary><strong>Why It Was Banned:</strong></summary>
+            <p>A scathing critique of totalitarian regimes and the dangers of unchecked authority.</p>
+          </details>
+          <details open>
+            <summary><strong>Why You Should Read It:</strong></summary>
+            <p>This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.</p>
+          </details>
+          <details open>
+            <summary><strong>Where to Read It for Free:</strong></summary>
+            <ul>
+              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
+              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
+              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
+              <!-- Add more list items if needed -->
+            </ul>
+          </details>
+        </section>
+        
+      </article>
+      
+      <!-- Deep Cuts Trigger (a tiny glitched-out element) -->
+      <a href="#deepcuts" class="deepcuts-link">∆</a>
+    </main>
+    
+    <!-- Hidden Deep Cuts Section -->
+    <section id="deepcuts" class="deepcuts">
+      <a href="#" class="close-deepcuts">×</a>
+      <h3>Deep Cuts</h3>
+      <p>
+        Here you'll find hidden essays, raw sketches, and behind-the-scenes musings that delve deeper into the spirit of rebellion and the art of subversion.
+      </p>
+    </section>
+  </div>
 </body>
 </html>
