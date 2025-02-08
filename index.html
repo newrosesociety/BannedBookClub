@@ -12,7 +12,6 @@
   <style id="config">
     :root {
       /* Core configuration */
-      --background-image-url: url(flag.jpg);
       --header-title: "Banned Book Club";
       --book-title: "1984";
       --book-author: "by George Orwell";
@@ -68,8 +67,7 @@
     
     /* Global styles */
     body {
-      background: var(--background-image-url) no-repeat center center fixed;
-      background-size: cover;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><filter id='fractal'><feTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='4' stitchTiles='stitch'/></filter><rect width='1200' height='800' filter='url(%23fractal)'/></svg>") center/cover no-repeat;
       color: var(--text-color);
       font-family: var(--body-font);
       line-height: 1.6;
