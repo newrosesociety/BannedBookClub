@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Banned Book Club</title>
+  <title>Punk Reads: Rebel Pages</title>
   
-  <!-- Import custom font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Import custom fonts from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Bangers&display=swap" rel="stylesheet">
   
   <!-- Configurable variables -->
   <style id="config">
     :root {
       /* Core configuration */
-      --background-image-url: url(defaultback.jpg);
-      --header-title: "The Banned Book Club";
+      --background-image-url: url(flag.jpg);
+      --header-title: "Banned Book Club";
       --book-title: "1984";
       --book-author: "by George Orwell";
       --book-cover-url: url('OIP.jpg');
@@ -25,7 +25,10 @@
 
       --details-banned-content: "A scathing critique of totalitarian regimes and the dangers of unchecked authority.";
       --details-read-content: "This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.";
-      --details-free-content: "Download PDF; Download PDF; Download PDF";
+      /* For free content, update the list items in the HTML below */
+      --details-free-item-1: "Download PDF";
+      --details-free-item-2: "Download EPUB";
+      --details-free-item-3: "Download MOBI";
 
       /* Individual accent colors and gradients for each details area */
       --banned-accent: #d00;
@@ -46,7 +49,7 @@
     /* Base CSS Variables */
     :root {
       --text-color: #000000;
-      --header-font: 'Lato', Impact, Haettenschweiler, 'Arial Black', sans-serif;
+      --header-font: 'Bangers', cursive, Impact, Haettenschweiler, 'Arial Black', sans-serif;
       --body-font: 'Lato', Arial, sans-serif;
     }
     
@@ -90,6 +93,7 @@
       font-size: 3em;
       letter-spacing: 2px;
       margin-bottom: 10px;
+      text-shadow: 2px 2px 2px rgba(0,0,0,0.3);
     }
     header h1::before {
       content: var(--header-title);
@@ -123,19 +127,22 @@
     
     .book-title {
       font-family: var(--header-font);
-      font-size: 2.5em;
+      font-size: 2.8em;
       margin-bottom: 10px;
       text-align: center;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.2);
     }
     .book-title::before {
       content: var(--book-title);
     }
     
     .book-author {
-      font-size: 1.2em;
+      font-family: var(--body-font);
+      font-size: 1.4em;
       margin-bottom: 20px;
       text-align: center;
-      color: var(--banned-accent);
+      color: var(--read-accent);
+      letter-spacing: 1px;
     }
     .book-author::before {
       content: var(--book-author);
@@ -157,6 +164,10 @@
       border: 1px solid;
       border-radius: 4px;
       transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      caret-color: transparent;  /* Prevents the text cursor from appearing */
     }
     /* Expand summary area to full width */
     .book-details details summary:hover {
@@ -196,7 +207,7 @@
       border-color: var(--free-accent);
     }
     
-    /* Insert details titles and content from variables */
+    /* Insert details titles and content from variables for first two details */
     .book-details details:nth-of-type(1) summary strong::before {
       content: var(--details-banned-title);
     }
@@ -209,11 +220,33 @@
     .book-details details:nth-of-type(2) p::before {
       content: var(--details-read-content);
     }
+    
+    /* For free section summary, insert the title */
     .book-details details:nth-of-type(3) summary strong::before {
       content: var(--details-free-title);
     }
-    .book-details details:nth-of-type(3) p::before {
-      content: var(--details-free-content);
+    
+    /* Insert free list items via pseudo-elements */
+    .book-details details:nth-of-type(3) ul li:nth-of-type(1)::before {
+      content: var(--details-free-item-1);
+    }
+    .book-details details:nth-of-type(3) ul li:nth-of-type(2)::before {
+      content: var(--details-free-item-2);
+    }
+    .book-details details:nth-of-type(3) ul li:nth-of-type(3)::before {
+      content: var(--details-free-item-3);
+    }
+    
+    /* Optional: style free list items for better spacing */
+    .book-details details ul li {
+      margin-bottom: 5px;
+      padding-left: 20px; 
+      position: relative;
+    }
+    .book-details details ul li::before {
+      position: absolute;
+      left: 0;
+      top: 0;
     }
     
     /* Responsive layout adjustments */
@@ -223,6 +256,16 @@
       .book-title { font-size: 2em; }
       .book-cover { padding-bottom: 60%; }
       .book-details details summary { padding: 8px; }
+    }
+  </style>
+  <style>
+    header h1,
+    .book-title,
+    .book-author {
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      caret-color: transparent;
     }
   </style>
 </head>
@@ -259,10 +302,15 @@
           </details>
           <details>
             <summary>
-              <strong><!-- Details title via config --></strong>
+              <strong><!-- Free Details title via config --></strong>
               <span style="display:none;"><!-- placeholder --></span>
             </summary>
-            <p><!-- Details content via config --></p>
+            <!-- For the free section, we are using a proper list -->
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
           </details>
         </section>
       </article>
