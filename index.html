@@ -8,14 +8,34 @@
   <!-- Configurable variables -->
   <style id="config">
     :root {
-      /* Make sure the image exists at this path relative to index.html */
+      /* Core configuration */
       --background-image-url: url(defaultback.jpg);
       --header-title: "The Banned Book Club";
       --book-title: "1984";
       --book-author: "by George Orwell";
       --book-cover-url: url('OIP.jpg');
-      /* Accent color still used for borders elsewhere if needed */
-      --accent-color: #d00;
+      
+      /* Details text content */
+      --details-banned-title: "Why It Was Banned:";
+      --details-read-title: "Why You Should Read It:";
+      --details-free-title: "Where to Read It for Free:";
+
+      --details-banned-content: "A scathing critique of totalitarian regimes and the dangers of unchecked authority.";
+      --details-read-content: "This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.";
+      --details-free-content: "Download PDF; Download PDF; Download PDF";
+
+      /* Individual accent colors and gradients for each details area */
+      --banned-accent: #d00;
+      --banned-gradient-start: #ffdddd;
+      --banned-gradient-end: #ffbbbb;
+
+      --read-accent: #ffc107;
+      --read-gradient-start: #ffffcc;
+      --read-gradient-end: #ffff99;
+
+      --free-accent: #00aabb;
+      --free-gradient-start: #ddeeff;
+      --free-gradient-end: #b0d4ee;
     }
   </style>
   
@@ -68,7 +88,7 @@
       content: var(--header-title);
     }
 
-    /* Book article styling (removed border) */
+    /* Book article styling (removed borders) */
     .book {
       max-width: 800px;
       margin: 0 auto;
@@ -101,7 +121,7 @@
       font-size: 1.2em;
       margin-bottom: 20px;
       text-align: center;
-      color: var(--accent-color);
+      color: var(--banned-accent); /* Using banned accent as common color elsewhere if needed */
     }
     /* Configurable book author text */
     .book-author::before {
@@ -109,35 +129,50 @@
     }
 
     /* Expandable Text Areas using <details> */
+    /* Remove inner padding so that borders line up; padding is moved to summary */
     .book-details details {
       margin-bottom: 15px;
-      padding: 10px;
-      /* Remove any default border if present */
+      padding: 0;
       border: none;
     }
     .book-details details summary {
+      display: block;
+      padding: 10px;
       font-weight: bold;
       cursor: pointer;
       list-style: none;
       outline: none;
+      border: 1px solid;
+      border-radius: 4px;
     }
     .book-details details p,
     .book-details details ul {
       margin-top: 10px;
-      padding-left: 15px;
+      padding: 10px 15px;
     }
     .book-details details ul {
       list-style: disc inside;
     }
-    /* Background colors for each details container */
+    /* Details area #1 – Banned */
     .book-details details:nth-of-type(1) {
-      background: #ffdddd; /* Red alert background */
+      background: linear-gradient(to right, var(--banned-gradient-start), var(--banned-gradient-end));
     }
+    .book-details details:nth-of-type(1) summary {
+      border-color: var(--banned-accent);
+    }
+    /* Details area #2 – Read */
     .book-details details:nth-of-type(2) {
-      background: #ffffcc; /* Yellow caution-tape-inspired background */
+      background: linear-gradient(to right, var(--read-gradient-start), var(--read-gradient-end));
     }
+    .book-details details:nth-of-type(2) summary {
+      border-color: var(--read-accent);
+    }
+    /* Details area #3 – Free */
     .book-details details:nth-of-type(3) {
-      background: #ddeeff; /* Green/blue go background */
+      background: linear-gradient(to right, var(--free-gradient-start), var(--free-gradient-end));
+    }
+    .book-details details:nth-of-type(3) summary {
+      border-color: var(--free-accent);
     }
   </style>
 </head>
@@ -159,24 +194,52 @@
         <!-- Expandable Book Details (default collapsed) -->
         <section class="book-details">
           <details>
-            <summary><strong>Why It Was Banned:</strong></summary>
-            <p>A scathing critique of totalitarian regimes and the dangers of unchecked authority.</p>
+            <summary>
+              <strong><!-- Details title via config --></strong>
+              <span style="display:none;"><!-- placeholder --></span>
+            </summary>
+            <p><!-- Details content via config --></p>
           </details>
           <details>
-            <summary><strong>Why You Should Read It:</strong></summary>
-            <p>This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.</p>
+            <summary>
+              <strong><!-- Details title via config --></strong>
+              <span style="display:none;"><!-- placeholder --></span>
+            </summary>
+            <p><!-- Details content via config --></p>
           </details>
           <details>
-            <summary><strong>Where to Read It for Free:</strong></summary>
-            <ul>
-              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
-              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
-              <li><a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a></li>
-            </ul>
+            <summary>
+              <strong><!-- Details title via config --></strong>
+              <span style="display:none;"><!-- placeholder --></span>
+            </summary>
+            <p><!-- Details content via config --></p>
           </details>
         </section>
       </article>
     </main>
   </div>
+  
+  <!-- Inline CSS to insert details content from variables -->
+  <style>
+    /* Insert details titles and content using pseudo-elements */
+    .book-details details:nth-of-type(1) summary strong::before {
+      content: var(--details-banned-title);
+    }
+    .book-details details:nth-of-type(1) p::before {
+      content: var(--details-banned-content);
+    }
+    .book-details details:nth-of-type(2) summary strong::before {
+      content: var(--details-read-title);
+    }
+    .book-details details:nth-of-type(2) p::before {
+      content: var(--details-read-content);
+    }
+    .book-details details:nth-of-type(3) summary strong::before {
+      content: var(--details-free-title);
+    }
+    .book-details details:nth-of-type(3) p::before {
+      content: var(--details-free-content);
+    }
+  </style>
 </body>
 </html>
