@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Banned Book Club</title>
+  <style>
+    /* Color variables for light & dark mode */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --accent-color: #d00;
+      --header-font: Impact, Haettenschweiler, 'Arial Black', sans-serif;
+      --body-font: Arial, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: #000000;
+        --text-color: #ffffff;
+        --accent-color: #ff5555;
+      }
+    }
+    
+    /* Basic Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Body Styling with a subtle DIY texture */
+    body {
+      background-color: var(--bg-color);
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
+      color: var(--text-color);
+      font-family: var(--body-font);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h1 {
+      font-family: var(--header-font);
+      font-size: 3em;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px var(--accent-color);
+      margin-bottom: 10px;
+    }
+    
+    /* Main book content */
+    .book {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 2px solid var(--accent-color);
+      background-color: var(--bg-color);
+    }
+    .book-title {
+      font-family: var(--header-font);
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .book-author {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: var(--accent-color);
+    }
+    .book-details div {
+      margin-bottom: 15px;
+    }
+    .book-details strong {
+      color: var(--accent-color);
+    }
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--accent-color);
+    }
+    a:hover {
+      opacity: 0.8;
+    }
+    
+    /* QR Code Placeholder */
+    .qr-code {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .qr-placeholder {
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      border: 2px dashed var(--accent-color);
+      line-height: 120px;
+      font-size: 0.9em;
+      color: var(--text-color);
+    }
+    
+    /* Hidden Deep Cuts Section */
+    .deepcuts {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 40px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+    .deepcuts:target {
+      display: block;
+    }
+    .deepcuts h3 {
+      font-family: var(--header-font);
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    /* Close button for Deep Cuts */
+    .close-deepcuts {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2em;
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+    
+    /* Tiny glitched-out Deep Cuts trigger */
+    .deepcuts-link {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      font-size: 1.5em;
+      color: var(--accent-color);
+      text-decoration: none;
+      opacity: 0.7;
+      z-index: 1000;
+      /* DIY glitch effect */
+      text-shadow: -1px -1px var(--text-color), 1px 1px var(--accent-color);
+    }
+    .deepcuts-link:hover {
+      opacity: 1;
+      transform: translate(1px, -1px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+      h1 {
+        font-size: 2.5em;
+      }
+      .book-title {
+        font-size: 2em;
+      }
+      .qr-placeholder {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>The Banned Book Club</h1>
+  </header>
+  
+  <!-- Main Content -->
+  <main>
+    <article class="book">
+      <h2 class="book-title">1984</h2>
+      <p class="book-author">by George Orwell</p>
+      <section class="book-details">
+        <div class="banned">
+          <strong>Why It Was Banned:</strong> A scathing critique of totalitarian regimes and the dangers of unchecked authority.
+        </div>
+        <div class="read-it">
+          <strong>Why You Should Read It:</strong> This dystopian masterpiece challenges the status quo and warns of a future where freedom is a myth.
+        </div>
+        <div class="free-copies">
+          <strong>Where to Read It for Free:</strong> <a href="https://example.com/free-1984" target="_blank" rel="noopener">Download PDF</a>
+        </div>
+      </section>
+      <div class="qr-code">
+        <div class="qr-placeholder">QR Code</div>
+      </div>
+    </article>
+    <!-- Deep Cuts Trigger (a tiny glitched-out logo) -->
+    <a href="#deepcuts" class="deepcuts-link">∆</a>
+  </main>
+  
+  <!-- Hidden Deep Cuts Section -->
+  <section id="deepcuts" class="deepcuts">
+    <a href="#" class="close-deepcuts">×</a>
+    <h3>Deep Cuts</h3>
+    <p>
+      Here you'll find hidden essays, raw sketches, and behind-the-scenes musings that delve deeper into the spirit of rebellion and the art of subversion.
+    </p>
+  </section>
+</body>
+</html>
